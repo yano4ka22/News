@@ -20,14 +20,13 @@ class Article  extends Component {
             bigText = this.props.data.bigText,
             visible = this.state.visible;
 
-        console.log('render', this);
         return (
             <div className="article">
                 <p className="news_author">{author}:</p>
                 <p className="news_text">{text}</p>
                 <a href='#'
                    onClick = {this.readMoreClick}
-                   className = {'news_readmore ' + (visible ? 'none' : '')} >
+                   className = 'news_readmore ' >
                     Подробнее</a>
                 <p className = {'news_readmore ' + (visible ? '' : 'none')}>{bigText}</p>
             </div>
