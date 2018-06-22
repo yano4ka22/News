@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './index.css';
 import News from './components/News';
-import TestInput from './components/TestInput';
+import Add from './components/Add';
 
 let my_news = [
     {
@@ -25,7 +25,7 @@ class App extends Component {
         return(
             <div>
                 <h3>Новости</h3>
-                <TestInput />
+                <Add />
                 <News data={my_news} />
             </div>
             )

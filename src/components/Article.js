@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
 class Article  extends Component {
     constructor(props){
@@ -24,7 +23,7 @@ class Article  extends Component {
             <div className="article">
                 <p className="news_author">{author}:</p>
                 <p className="news_text">{text}</p>
-                <a href='#'
+                <a
                    onClick = {this.readMoreClick}
                    className = 'news_readmore ' >
                     Подробнее</a>
@@ -33,9 +32,5 @@ class Article  extends Component {
         );
     }
 }
-Article.propTypes = {
-    author: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-};
 
 export default Article ;
