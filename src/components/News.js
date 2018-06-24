@@ -19,7 +19,8 @@ class News extends Component {
         }
 
         return (
-        <div className="news">{newsTemplate}
+        <div className="news">
+            {newsTemplate}
             <strong className={'news__count ' + (data.length > 0 ? '' : 'none')}>Всего новостей: {data.length}</strong>
         </div>
         );

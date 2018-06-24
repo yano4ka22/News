@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
 class Article  extends Component {
     constructor(props){
@@ -26,16 +25,11 @@ class Article  extends Component {
                 <p className="news_text">{text}</p>
                 <a href='#'
                    onClick = {this.readMoreClick}
-                   className = 'news_readmore ' >
+                   className = {'news_readmore ' + (visible ? 'none' : '')} >
                     Подробнее</a>
                 <p className = {'news_readmore ' + (visible ? '' : 'none')}>{bigText}</p>
             </div>
         );
     }
 }
-Article.propTypes = {
-    author: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired
-};
-
 export default Article ;
