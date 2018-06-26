@@ -4,41 +4,81 @@ import ReactDOM from 'react-dom';
 class Add extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            agreeNotChecked: true,
+            authorIsEmpty: true,
+            textIsEmpty: true
+        };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
+        this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
     }
     componentDidMount() {
-        ReactDOM.findDOMNode(this.refs.text).focus();
+        ReactDOM.findDOMNode(this.refs.author).focus();
     }
     handleChange(event) {
         this.setState({myValue: event.target.value});
     }
-    handleSubmit() {
-        alert(ReactDOM.findDOMNode(this.refs.text).value);
+    /*handleSubmit() {
+        alert(ReactDOM.findDOMNode(this.refs.author).value + '\n' + ReactDOM.findDOMNode(this.refs.text).value);
+    }*/
+    onCheckRuleClick(){
+        this.setState(() => ({
+            agreeNotChecked: !this.state.agreeNotChecked
+        }));
     }
-    onCheckRuleClick(event) {
-        ReactDOM.findDOMNode(this.refs.alert_button).disabled = !event.target.checked;
+    onFieldChange(fieldName, e){
+        let isCheck=true;
+        if (e.target.value.trim() > 0) {
+            isCheck= false;
+        }
+        this.setState(() => ({[''+fieldName]:isCheck}));
     }
+    onBtnClickHandler() {
+        let authorCheck = this.refs.author.value.trim();
+        let textCheck = this.refs.text.value.trim();
+        let item =[{
+            author: authorCheck,
+            text: textCheck,
+            bigText: '...'
+        }];
+        console.log('agreeNotChecked', this.state.agreeNotChecked);
+        console.log('authorIsEmpty', this.state.authorIsEmpty);
+        console.log('textIsEmpty', this.state.textIsEmpty);
+
+        window.ee.emit('News.add', item);
+
+        this.setState(() => ({
+            textIsEmpty: true
+        }))
+
+    }
+
     render() {
+        let agreeNotChecked = this.state.agreeNotChecked,
+            authorIsEmpty = this.state.authorIsEmpty,
+            textIsEmpty = this.state.textIsEmpty;
+
         return (
-            <form className = 'add cf'>
-                <input type='text'
-                    className='add_author'
-                    defaultValue = ''
-                    placeholder='Ваше имя'
-                    ref = 'author'
+            <div className='add cf'>
+                <input onChange={this.onFieldChange.bind(this, 'authorIsEmpty')}
+                       type='text'
+                       className='add_author'
+                       defaultValue=''
+                       placeholder='Ваше имя'
+                       ref='author'
                 />
-                <textarea className='add_text'
-                    defaultValue=''
-                    placeholder='Текст новости'
-                    ref='text'
+                <textarea onChange={this.onFieldChange.bind(this, 'textIsEmpty')}
+                          className='add_text'
+                          defaultValue=''
+                          placeholder='Текст новости'
+                          ref='text'
                 />
                 <label className='add_checkrule'>
                     <input type='checkbox' defaultChecked={false} ref='checkrule' onChange={this.onCheckRuleClick} />Я согласен с правилами
                 </label>
-                <button className='add_btn' onClick = {this.handleSubmit} ref='alert_button' disabled>Click</button>
-            </form>
+                <button className='add_btn' onClick={this.onBtnClickHandler} ref='alert_button' disabled={agreeNotChecked || authorIsEmpty || textIsEmpty}>Добавить новость</button>
+            </div>
         );
     }
 }
