@@ -32,24 +32,25 @@ class App extends Component {
     componentDidMount(){
         let self = this;
         window.ee.addListener('News.add', (item) =>{
-            console.log('asdasd,',item);
-            let nextNews = item.concat(self.state.news);
-                self.setState({news: nextNews});
+                let nextNews = item.concat(self.state.news);
+
+                self.setState(() => ({
+                    news: nextNews
+                }));
             }
         )
     }
+
     componentWillUnmount(){
         window.ee.removeListener('News.add');
     }
     render() {
-        return(
-            <div className='app'>
-                <h3>Добавить новость</h3>
-                <Add />
-                <h3>Новости</h3>
-                <News data={my_news} />
-            </div>
-        )
+        return <div className='app'>
+            <h3>Добавить новость</h3>
+            <Add/>
+            <h3>Новости</h3>
+            <News data={this.state.news}/>
+        </div>
     }
 }
 
